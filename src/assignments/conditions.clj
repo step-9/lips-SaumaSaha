@@ -42,7 +42,9 @@
   {:level      :easy
    :use        '[when-first concat]
    :alternates '[empty? seq? conj into]}
-  [coll])
+  [coll]
+  (when-first [a coll]
+    (conj coll a)))
 
 (defn five-point-someone
   "Returns :chetan-bhagat if y is 5.
