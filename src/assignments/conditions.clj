@@ -60,6 +60,9 @@
     (> x y) :greece
     :else :universe))
 
+(defn is-present [my-vec given-vec]
+  (= my-vec (filter #(contains? (into #{} my-vec) %) given-vec)))
+
 (defn conditions-apply
   "Given a collection of any length, returns:
   :wonder-woman if collection has a single occurrence of 1 and 3 in that order
@@ -70,10 +73,10 @@
    :use        '[condp filter]
    :alternates '[if cond]}
   [coll]
-  (condp = (filter #(contains? #{1 3 :a :b :c [2 3] [4 5]} %) coll)
-         [1 3] :wonder-woman
-         [:a :b :c] :durga
-         [[2 3] [4 5]] :cleopatra
+  (condp apply [coll]
+         (partial is-present [1 3]) :wonder-woman
+         (partial is-present [:a :b :c]) :durga
+         (partial is-present [[2 3] [4 5]]) :cleopatra
          :tuntun))
 
 (defn repeat-and-truncate

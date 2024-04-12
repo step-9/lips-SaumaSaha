@@ -84,6 +84,7 @@
   (testing ":durga when :a :b :c in order"
     (is (= :durga (c/conditions-apply [:a :b :c])))
     (is (= :durga (c/conditions-apply [:a 0 :b 0 :c])))
+    (is (= :durga (c/conditions-apply [:a 0 :b 0 1 :c])))
     (is (= :durga (c/conditions-apply [0 :a :b :c 0]))))
   (testing ":cleopatra when [2 3] and [4 5] are in order"
     (is (= :cleopatra (c/conditions-apply [[2 3] [4 5]])))
