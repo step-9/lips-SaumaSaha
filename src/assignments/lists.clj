@@ -7,8 +7,6 @@
       result
       (recur remaining (conj result (f first))))))
 
-(apply max (apply-function count [[1 2 3] [4 5]]))
-
 (defn map'
   "Implement a non-lazy version of map that accepts a
   mapper function and several collections. The output
@@ -22,8 +20,6 @@
     (let [min-list-size (apply min (apply-function count colls))]
       min-list-size)))
 
-(map' identity [1 2 3] [4 5])
-
 (defn filter'
   "Implement a non-lazy version of filter that accepts a
   predicate function and a collection. The output
@@ -31,7 +27,15 @@
   {:level        :easy
    :use          '[loop recur]
    :dont-use     '[filter]}
-  [pred coll])
+  [pred coll]
+  (loop [[first & remaining] coll result []]
+    (if (nil? first)
+      result
+      (recur remaining (if (pred first)
+                          (conj result first)
+                          result)))))
+
+(filter' even? [1 2 3 4 56])
 
 (defn reduce'
   "Implement your own multi-arity version of reduce
