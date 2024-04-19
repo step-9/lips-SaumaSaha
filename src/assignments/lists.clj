@@ -35,8 +35,6 @@
                           (conj result first)
                           result)))))
 
-(filter' even? [1 2 3 4 56])
-
 (defn reduce'
   "Implement your own multi-arity version of reduce
   that accepts a predicate function and a collection.
@@ -44,8 +42,14 @@
   {:level        :medium
    :use          '[loop recur]
    :dont-use     '[reduce]}
-  ([f coll])
-  ([f init coll]))
+  ([f coll]
+   (reduce' f (first coll) (rest coll)))
+  ([f init coll]
+   (loop [[first & remaining] coll
+           context init]
+    (if (nil? first)
+      context
+      (recur remaining (f context first))))))
 
 (defn count'
   "Implement your own version of count that counts the
