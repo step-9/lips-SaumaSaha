@@ -1,5 +1,14 @@
 (ns assignments.lists)
 
+(defn apply-function
+  [f coll]
+  (loop [[first & remaining] coll result []]
+    (if (nil? first)
+      result
+      (recur remaining (conj result (f first))))))
+
+(apply max (apply-function count [[1 2 3] [4 5]]))
+
 (defn map'
   "Implement a non-lazy version of map that accepts a
   mapper function and several collections. The output
@@ -7,7 +16,13 @@
   {:level        :medium
    :use          '[loop recur]
    :dont-use     '[map]}
-  [f & colls])
+  [f & colls]
+  (if (= 1 (count colls))
+    (apply-function f (first colls))
+    (let [min-list-size (apply min (apply-function count colls))]
+      min-list-size)))
+
+(map' identity [1 2 3] [4 5])
 
 (defn filter'
   "Implement a non-lazy version of filter that accepts a
