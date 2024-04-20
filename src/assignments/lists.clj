@@ -79,7 +79,13 @@
   {:level        :easy
    :use          '[loop recur and]
    :dont-use     '[every?]}
-  [pred coll])
+  [pred coll]
+  (loop [[first & remaining] coll]
+    (if (nil? first)
+      true
+      (and (pred first) (recur remaining)))))
+
+(every?' even? [2 4 1 6 8])
 
 (defn some?'
   "Implement your own version of some that checks if at least one
