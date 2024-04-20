@@ -85,8 +85,6 @@
       true
       (and (pred first) (recur remaining)))))
 
-(every?' even? [2 4 1 6 8])
-
 (defn some?'
   "Implement your own version of some that checks if at least one
   element of a coll satisfies the given predicate. Always return
@@ -95,7 +93,11 @@
   {:level        :easy
    :use          '[loop recur or]
    :dont-use     '[some]}
-  [pred coll])
+  [pred coll]
+  (loop [[first & remaining] coll]
+    (if (nil? first)
+      false
+      (or (pred first) (recur remaining)))))
 
 (defn ascending?
   "Verify if every element is greater than or equal to its predecessor"
